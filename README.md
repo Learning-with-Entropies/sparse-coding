@@ -1,2 +1,11 @@
 # sparse-coding
-Learning Sparse Codes with Entropy-Based ELBOs
+
+Official code repository for the AISTATS-2024 conference publication
+
+**Learning Sparse Codes with Entropy-Based ELBOs**
+
+*Dmytro Velychko, Simon Damm, Asja Fisher, Jörg Lücke*
+
+
+
+
