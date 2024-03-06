@@ -67,7 +67,7 @@ def plot_entropies(likelihood_entropies, prior_entropies, proposal_entropies, fi
     plt.close()
 
 
-def plot_Ws(model, filename):
+def plot_Ws(model, filename=None):
     W = model.make_W().to("cpu").detach().numpy()
     images = to_images(W)
     d = int(len(images)/2)
@@ -80,11 +80,12 @@ def plot_Ws(model, filename):
         plt.setp(ax.get_yticklabels(), visible=False)
         ax.tick_params(axis='both', which='both', length=0)
         ax.imshow(img, cmap=cmap,norm=normalizer)
-    fig.savefig(filename)
-    plt.close()
+    if filename is not None:
+        fig.savefig(filename)
+        plt.close()
 
 
-def plot_training_data(x, filename):
+def plot_training_data(x, filename=None):
     x = x.T.to("cpu").detach().numpy()
     images = to_images(x)
     d = int(len(images)/2)
@@ -97,18 +98,21 @@ def plot_training_data(x, filename):
         plt.setp(ax.get_yticklabels(), visible=False)
         ax.tick_params(axis='both', which='both', length=0)
         ax.imshow(img, cmap=cmap,norm=normalizer)
-    fig.savefig(filename)
-    plt.close()
+    if filename is not None:
+        fig.savefig(filename)
+        plt.close()
 
 
-def plot_W(model, filename, order=None):
+def plot_W(model, filename=None, order=None):
     W = model.make_W().to("cpu").detach().numpy()
-    np.savetxt(filename[:-4]+".txt", W, fmt="%f", delimiter=",")
+    if filename is not None:
+        np.savetxt(filename[:-4]+".txt", W, fmt="%f", delimiter=",")
     images = to_images(W)
     d = int(math.sqrt(len(images)))
 
-    if order is not None:
-        np.savetxt(filename[:-4]+"-order.txt", order, fmt="%f", delimiter=",")
+    if order is not None:    
+        if filename is not None:
+            np.savetxt(filename[:-4]+"-order.txt", order, fmt="%f", delimiter=",")
         order = np.argsort(order)
         images = images[np.flip(order)]
 
@@ -119,8 +123,9 @@ def plot_W(model, filename, order=None):
     for ax, img in zip(axs.flat, images):
         ax.imshow(img, cmap=cmap, norm=normalizer)
         ax.set_axis_off()
-    fig.savefig(filename)
-    plt.close()
+    if filename is not None:
+        fig.savefig(filename)
+        plt.close()
 
 
 def plot_samples(model, x, indexes, filename, nsamples=10):
